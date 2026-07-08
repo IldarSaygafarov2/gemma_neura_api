@@ -13,5 +13,6 @@ services:
         python manage.py makemigrations &&
         python manage.py migrate --no-input &&
         python manage.py collectstatic --noinput && 
+        python manage.py createsuperuser --noinput || true &&
         gunicorn -c deploy/gunicorn.conf.py core.project.wsgi:application
       "
