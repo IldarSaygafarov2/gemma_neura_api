@@ -32,3 +32,16 @@ class ServiceInclude(BaseModel):
     class Meta:
         verbose_name = "Элемент услуги"
         verbose_name_plural = "Элементы услуги"
+
+
+class ContactFormRequest(BaseModel):
+    name = models.CharField(verbose_name="Имя", max_length=150)
+    email = models.EmailField(verbose_name="Почта")
+    message = models.TextField(verbose_name="Сообщение")
+
+    def __str__(self):
+        return f"{self.name} - {self.email} - {self.created_at}"
+
+    class Meta:
+        verbose_name = "Заявка из формы"
+        verbose_name_plural = "Заявки из формы"

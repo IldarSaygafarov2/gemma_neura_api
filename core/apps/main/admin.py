@@ -1,7 +1,12 @@
 from django.contrib import admin
 from unfold import admin as unfold_admin
 
-from .models import Service, ServiceInclude
+from .models import Service, ServiceInclude, ContactFormRequest
+
+
+@admin.register(ContactFormRequest)
+class ContactFormRequestAdmin(unfold_admin.ModelAdmin):
+    list_display = ["id", "name", "email", "created_at"]
 
 
 class ServiceIncludeInline(unfold_admin.TabularInline):

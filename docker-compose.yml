@@ -8,6 +8,8 @@ services:
       - ./:/app
     ports:
       - "8000:8000"
+    depends_on:
+      - redis
     command: >
       sh -c  " 
         python manage.py makemigrations &&
@@ -16,3 +18,17 @@ services:
         python manage.py createsuperuser --noinput || true &&
         gunicorn -c deploy/gunicorn.conf.py core.project.wsgi:application
       "
+  redis:
+    image: redis:7-alpine
+    container_name: redis_broker
+    ports:
+      - "6379:6379"
+  celery_worker:
+    build: .
+    container_name: celery_worker
+    command: celery -A core.project:celery_app worker --loglevel=info
+    volumes:
+      - .:/app
+    depends_on:
+      - redis
+      - api

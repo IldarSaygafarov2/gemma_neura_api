@@ -1,6 +1,7 @@
-from ninja import Schema
-from uuid import UUID
 from datetime import datetime
+from uuid import UUID
+
+from ninja import Schema
 
 
 class BaseServiceSchema(Schema):
@@ -20,3 +21,18 @@ class ServiceListSchema(BaseServiceSchema):
     short_description: str
     price_from: str
     includes: list[ServiceIncludeSchema]
+
+
+class ContactFormBaseSchema(Schema):
+    name: str
+    email: str
+    message: str
+
+
+class ContactFormSchema(ContactFormBaseSchema):
+    id: UUID
+    created_at: datetime
+
+
+class ContactFormCreateSchema(ContactFormBaseSchema):
+    pass
